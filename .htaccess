@@ -1,0 +1,11 @@
+RewriteEngine On
+# Allow direct access to app.php
+
+
+# Rewrite all other requests to app.php if the file or directory doesn't exist
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+
+
+RewriteRule ^(.*)$ /app.php [QSA,L]
