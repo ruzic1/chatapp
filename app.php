@@ -28,7 +28,8 @@
             '/login-processing'=>['LoginController','loginprocessing'],
             '/products'=>['ProductsController','products'],
             '/user-connections'=>['UserController','userChats'],
-            '/message-retrieval'=>['ChatsController','messageRetrieval']
+            '/message-retrieval'=>['ChatsController','messageRetrieval'],
+            '/get-user'=>['UserController','returnUserId']
         ];
         $segmentedUrl=array_filter(explode('/',$_SERVER['REQUEST_URI']));
 

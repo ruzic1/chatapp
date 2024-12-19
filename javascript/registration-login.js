@@ -144,27 +144,18 @@ if(loginButton){
             }else if(data.message==false){
                 console.log(data.description);
             }
-            // window.location.replace="./products.php"
         })
         .catch((err)=>{
             console.error(err);
         })
     })
 }
-// loginButton.addEventListener('click',function(){
-//     let email=document.getElementById('email');
-//     let password=document.getElementById('password');
-//     console.log(email,password);
-// })
 document.addEventListener('DOMContentLoaded',()=>{
     const url=window.location.pathname;
-    //document.getElementById('listOfContacts').innerHTML=`<div class="contact">${}</div>`
-    //document.getElementById('currentUser').innerHTML=currentUserId;
+
     if(url=='/products')
     {
-        //document.getElementById('listOfContacts').innerHTML=`<div class="contact">${}</div>`
-        // const userId=new URLSearchParams(window.location.search).get('userId');
-        // console.log(userId);
+
         fetch(`/user-connections`,{
             method:'POST',
             headers:{

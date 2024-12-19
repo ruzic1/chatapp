@@ -26,11 +26,6 @@
                     <input id="email" name="email"  type="email" class='col-lg-12'/>
                     <span type="text" id="emailErrReport"></span>
                 </div>
-
-                <!-- <div class='form-group'>
-                    <label for="email">Email:</label>
-                    <input id="email" name="email"  type="email" />
-                </div> -->
                 <div class='form-group col-lg-12'>
                     <label for="password" class='col-lg-4'>Password:</label>
                     <input id="password" name="password"  type="password" class='col-lg-12'/>
@@ -46,9 +41,7 @@
                     
                 </div>
                 <span>If you have an account, <a href="/login">click here</a></span>
-                <!-- <div class="alert alert-danger" role="alert">
-                    This is a danger alert—check it out!
-                </div> -->
+
             </form>
         </div>
     </div>

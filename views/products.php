@@ -3,7 +3,6 @@
     //$userInfo=$_GET['userId'];
 ?>
 <script>
-
 </script>
 <style>
     body {
@@ -100,7 +99,7 @@
     }
 </style>
     <div class="containerHeader">
-        <h1 id='currentUser'></h1>
+        <h1 id='currentUser'><?=$_SESSION['username']?></h1>
     </div>
     <div class="container1">
         

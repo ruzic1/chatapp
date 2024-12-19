@@ -1,73 +1,101 @@
-const socket=new WebSocket('ws://127.0.0.1:8080');
-socket.onopen=function(){
-    console.log("WebSocket connection established.");
-}
-socket.onmessage=function(){
-    
-}
-socket.onclose=function(){
-    
-}
-socket.onerror=function(){
-    
-}
-const buttonForSending=document.getElementById('buttonForSendingMessage');
+let socket;
+window.onload=function(){  
+    //let socket;  
+    let username=getUsername().then(username=>{
+        socket=new WebSocket(`ws://127.0.0.1:8080?username=${username}`);
+        console.log(socket);
 
-
-if(buttonForSending){
-    //console.log(document.getElementById('textArea').value);
-   
-    //const socket=new WebSocket("ws://127.0.0.1:8080");
-
-    buttonForSending.addEventListener('click',function(){
-        const username="";
-        console.log(document.getElementsByClassName('contact'));
-        for(var i=0;i<document.getElementsByClassName('contact').length;i++){
-            // if(document.getElementsByClassName('contact')[i].style=='active'){
-            //     console.log('element '+document.getElementsByClassName('contact')[i]+' je aktivan')
-            // }
-            console.log(document.getElementsByClassName('contact')[i].classList.contains('active'));
-            if(document.getElementsByClassName('contact')[i].classList.contains('active')){
-                username=document.getElementsByClassName('contact')[i].querySelector('span').textContent;
-            }
+        socket.onopen=function(){
+            console.log("WebSocket connection established.");
+        }
+        socket.onmessage=function(event){
+            console.log(event);
+            if(event.data) outputMessagesInRealTime(event.data);
+            //console.log(event);
+            //const data=JSON.parse(event.data);
+            //console.log(data);
+            //socket.send(JSON.stringify(data));
+            //console.log(data);
+            // console.log('New message:', data);
+            // socket.send(data);
 
         }
+        socket.onclose=function(){
+            
+        }
+        socket.onerror=function(){
+            
+        }
+    });
+    //const socket=new WebSocket(`ws://127.0.0.1:8080?username=${username}`);
+    // socket.onopen=function(){
+    //     console.log("WebSocket connection established.");
+    // }
+    // socket.onmessage=function(event){
+    //     const data=JSON.parse(event.data);
+    //     console.log('New message:', data.text);
+    // }
+    // socket.onclose=function(){
         
-        //console.log
-        // const abc=document.getElementById('contacts');
-        // const idReciever=abc.getAttribute('data-reciever-id');
-        // for(var i=0;i<document.getElementsByClassName('contact').length;i++){
-        //     if(document.getElementsByClassName('contact')[i].style=='active'){
-        //         console.log('element '+document.getElementsByClassName('contact')[i]+' je aktivan')
-        //     }
-        // }
-        // const idSender=currentUserId;
-        // const message=document.getElementById('msgText').value;
-        // const senderUsername=document.
-        //console.log('OVO JE ID:'+id);
-        //const targetId=;
-        //const message=document.getElementById('textArea').value;
-        //sendMessage(idReciever,idSender,message);
-        // var msg=document.getElementById('textArea').value;
-        // console.log(msg);
-        // // console.log(123);
-        // // socket.send(msg);
-        // const socket=new WebSocket('ws://127.0.0.1:8080');
-        // socket.onopen=function(){
-        //     console.log("WebSocket connection established.");
-        //     socket.send(msg);
-        // }
+    // }
+    // socket.onerror=function(){
+        
+    // }
+    const buttonForSending=document.getElementById('buttonForSendingMessage');
 
-    })
 
+    if(buttonForSending){
+
+
+        buttonForSending.addEventListener('click',function(){
+            let username="";
+            console.log(document.getElementsByClassName('contact'));
+            for(var i=0;i<document.getElementsByClassName('contact').length;i++){
+
+                console.log(document.getElementsByClassName('contact')[i].classList.contains('active'));
+                if(document.getElementsByClassName('contact')[i].classList.contains('active')){
+                    username=document.getElementsByClassName('contact')[i].querySelector('span').textContent;
+                }
+
+            }
+            if(username!=""){
+                let msg=document.getElementById('msgText').value;
+                let sender_username= document.getElementById('currentUser').textContent;
+                let reciever_username=username;
+                sendMessage(reciever_username,sender_username,msg)
+            }
+        })
+
+    }
 }
-function sendMessage(targetId,senderId,msg){
+function sendMessage(reciever_username,sender_username,msg){
     const message={
-        targetId:targetId,
-        messageText:msg,
-        senderId:senderId
+        reciever_username:reciever_username,
+        sender_username:sender_username,
+        msg:msg
     };
     socket.send(JSON.stringify(message));
+}
 
+// async function main(){
+//     const username=await getUsername();
+//     console.log(username);
+// }
 
+function getUsername(){
+
+    return fetch('/get-user')
+        .then(response=>response.json())
+        .then(data=>data.username);
+    // const response=fetch('/get-user');
+    // const data=response.json();
+    // return data.username;
+}
+
+function outputMessagesInRealTime(message){
+    const messageContainer=document.getElementById('message-area');
+    const newMessage=document.createElement('div');
+    newMessage.classList.add('message');
+    newMessage.textContent=message;
+    messageContainer.appendChild(newMessage);
 }

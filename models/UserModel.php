@@ -8,13 +8,7 @@
         private $lozinka;
         private $username;
 
-        // public function __construct()
-        // {
-        //     $this->pdo=new \PDO("mysql:host=localhost;dbname=chatapp","root","");
-        //     $this->pdo->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_OBJ);
-        //     $this->pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
 
-        // }
         public function checkIfUserExists($username,$email){
             $query=$this->pdo->prepare("SELECT * FROM korisnik WHERE (username=:username OR email_korisnik=:email)");
             $query->execute([
@@ -23,10 +17,7 @@
             ]);
             $user=$query->fetchAll(\PDO::FETCH_ASSOC);
             return $user;
-            //var_dump($user);
-            //return $result;
-            //var_dump($user);
-            //return $query;
+
         }
 
         public function retrieveHashedPassword($email){
@@ -47,14 +38,7 @@
                 ':lozinka'=>password_hash($password,PASSWORD_BCRYPT),
             ]);
             return $query;
-            //echo "AAAAAAAAAAAIJOADW";
-            //var_dump($requestBody);
-            //var_dump($requestBody);
-            //var_dump($requestBody);
-            // $query=$this->pdo->prepare("INSERT INTO korisnik (ime_korisnik,prezime_korisnik,email_korisnik,lozinka_korisnik) VALUES (:ime,:prezime,:email,:lozinka)")
-            // $query->execute([
-            //     ':username'=>$data['username']
-            // ])
+
         }
         public function retrieveLoggedUser($email,$password){
             $query=$this->pdo->prepare("SELECT id_korisnik,username FROM korisnik WHERE email_korisnik=:email AND lozinka_korisnik=:password");
@@ -66,9 +50,22 @@
             return $user;
         }
         public function chatsForUsers($id){
-            $query=$this->pdo->prepare("SELECT k1.id_primalac,k2.username,poruka FROM konekcija k1 INNER JOIN korisnik k2 ON k1.id_primalac=k2.id_korisnik  WHERE id_posiljalac=:id ORDER BY datum DESC LIMIT 1");
+            $query=$this->pdo->prepare('SELECT username,poruka
+            FROM korisnik INNER JOIN konekcija
+            ON korisnik.id_korisnik=konekcija.id_primalac OR korisnik.id_korisnik=konekcija.id_posiljalac
+            WHERE id_korisnik IN (
+                SELECT DISTINCT 
+                    CASE 
+                        WHEN id_posiljalac = :id THEN id_primalac
+                        WHEN id_primalac = :id THEN id_posiljalac
+                    END AS contact_id
+                FROM konekcija
+                WHERE id_posiljalac = :id OR id_primalac = :id
+            )
+            ORDER BY datum DESC LIMIT 1');
+
             $query->execute([
-                'id'=>$id
+                ':id'=>$id
             ]);
             $chats=$query->fetchAll(\PDO::FETCH_ASSOC);
             return $chats;
@@ -89,6 +86,20 @@
             
             //var_dump($query);
             return $query;
+        }
+        public function returnIdForSenderAndReciever($sender,$reciever){
+            try{
+                $query=$this->pdo->prepare('SELECT DISTINCT id_posiljalac,id_primalac,k2.username AS sender,k3.username AS reciever FROM konekcija k1 INNER JOIN korisnik k2 ON k1.id_posiljalac=k2.id_korisnik INNER JOIN korisnik k3 ON k1.id_primalac=k3.id_korisnik WHERE (k2.username=:sender AND k3.username=:reciever) OR (k2.username=:reciever AND k3.username=:sender)');
+                $query->execute([
+                    ':sender'=>$sender,
+                    ':reciever'=>$reciever
+                ]);
+                $users=$query->fetchAll(\PDO::FETCH_ASSOC);
+            }
+            catch(\PDOException $th){
+                $users='Error:'.$th;
+            }
+            return $users;
         }
     }
 
