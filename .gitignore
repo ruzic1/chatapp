@@ -1,0 +1,21 @@
+# Node.js dependencies
+node_modules/
+
+# PHP Composer dependencies
+vendor/
+
+# Environment files
+.env
+
+# React build files
+build/
+dist/
+
+# Log files
+*.log
+
+# OS-specific files
+.DS_Store
+
+# IDE settings
+.vscode/

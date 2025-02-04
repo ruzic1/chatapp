@@ -1,0 +1,209 @@
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  height:100%;
+  /* font-family: Arial, sans-serif;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f0f0f0; */
+}
+.avatar{
+  width: 50px;   /* Adjust size */
+    height: 50px;
+    border-radius: 50%;  /* Makes it circular */
+    object-fit: cover;  /* Ensures image fills the circle */
+    border: 2px solid #ddd;
+}
+/* Main Container */
+.containerA {
+  display: flex;
+  width: 100%;
+  height: 90vh;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fff;
+}
+
+/* Contacts Section */
+.contacts {
+  flex: 1;
+  border-right: 1px solid #ddd;
+  background: #f7f7f7;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.contact {
+  padding: 15px;
+  border-bottom: 1px solid #ddd;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.contact:hover {
+  background: #eaeaea;
+}
+
+/* Chat Section */
+.chat {
+  flex: 3;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background: #fafafa;
+  overflow:scroll;
+}
+
+
+.messages {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+}
+.message{
+  background-color: #dcf8c6;
+  position:relative;
+  display:flex;
+  width:fit-content;
+  word-wrap: break-word;
+  overflow: hidden;
+
+  min-width:50px;
+  max-width:300px; 
+  /* transition: width 0.3s ease-in-out; */
+}
+.chat-space{
+  padding:15px;
+  flex-grow:1;
+  min-width:0;
+  
+}
+
+.edit,.delete{
+  height:50%;
+  width:100%;
+  border:1px solid black;
+}
+.modal_custom{
+  background: green;
+  position: absolute;
+  float: left;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border:1px solid black;
+}
+.add-contact{
+  background-color: #25D366 ;
+}
+/* .message:hover{
+  min-width:100px;
+  max-width:400px;
+  width:350px;
+
+} */
+
+
+
+/* .message {
+
+  position: relative;
+  padding: 10px 20px;
+  background-color: #f3f3f3;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+}
+.message:hover .message-actions{
+  opacity: 1;
+  pointer-events: auto;
+}
+
+
+.edit-btn,
+.delete-btn {
+  background-color: #3498db; 
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 14px;
+
+}
+
+.edit-btn:hover {
+  background-color: #2980b9; 
+}
+
+.delete-btn {
+  background-color: #e74c3c; 
+}
+
+.delete-btn:hover {
+  background-color: #c0392b; 
+}
+
+.message.sent {
+  position: relative; 
+  width: fit-content;
+  background: #dcf8c6; 
+  width:fit-content;
+  min-width: 50px;
+  max-width: 400px;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 8px;
+  overflow: hidden; 
+  transition: width 0.3s ease-in-out; 
+  word-wrap:break-word;
+  display:inline-block;
+  text-align:left;
+}
+
+.message.sent.expanded {
+  text-align:left;
+}
+
+.message.sent .buttons {
+  
+  top: 50%; 
+   
+  transform: translateY(-50%); 
+  display: none; 
+  flex-direction: column; 
+  gap: 5px; 
+}
+
+.message.sent.expanded .buttons {
+  display: flex; 
+}
+
+.message.sent .buttons button {
+  background: #007bff; 
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.message.sent .buttons .delete {
+  background: #dc3545;
+} */
+
+
+
+
+
